@@ -122,7 +122,7 @@ endif
 #And another kludge. Exception handling in gcc 4.6.2 is broken when linking the
 # Standard C++ library as a shared library. Unbelievable.
 ifeq ($(UNAME_OS),$(MINGW_STR))
-  CPPUTEST_LDFLAGS += -static
+#  CPPUTEST_LDFLAGS += -static
 endif
 ifeq ($(UNAME_OS),$(CYGWIN_STR))
   CPPUTEST_LDFLAGS += -static
@@ -277,6 +277,10 @@ ifeq ($(CPPUTEST_USE_STD_CPP_LIB), N)
 ifeq ($(CPPUTEST_USE_STD_C_LIB), Y)
 	CPPUTEST_CXXFLAGS += -nostdinc++
 endif
+endif
+
+ifeq ($(CPPUTEST_USE_MEM_LEAK_DETECTION), Y)
+	LD_LIBRARIES += -lpthread
 endif
 
 ifdef $(GMOCK_HOME)
